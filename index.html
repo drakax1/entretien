@@ -7,17 +7,24 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
         th { background-color: #f4f4f4; }
         .container { max-width: 800px; margin: auto; }
         .section { margin-top: 20px; }
         input, textarea { width: 100%; padding: 8px; margin-top: 5px; }
-        button { background-color: #28a745; color: white; padding: 10px; border: none; cursor: pointer; }
+        textarea { resize: vertical; }
+        button { background-color: #28a745; color: white; padding: 10px; border: none; cursor: pointer; position: absolute; right: 20px; bottom: 20px; }
         button:hover { background-color: #218838; }
         .inline { display: flex; gap: 40px; margin-bottom: 15px; }
         .inline label { flex: 1; }
         .bold { font-weight: bold; display: block; margin-top: 10px; }
+        footer { margin-top: 20px; }
     </style>
+    <script>
+        function imprimerPage() {
+            window.print();
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -41,44 +48,40 @@
                 <th>++</th>
                 <th>Remarques</th>
             </tr>
-            <tr><td>Performance au travail</td><td><input type="radio" name="performance" value="--"></td><td><input type="radio" name="performance" value="-"></td><td><input type="radio" name="performance" value="N"></td><td><input type="radio" name="performance" value="+"></td><td><input type="radio" name="performance" value="++"></td><td><input type="text" name="remarque_performance"></td></tr>
-            <tr><td>Compétences dans les tâches</td><td><input type="radio" name="competences" value="--"></td><td><input type="radio" name="competences" value="-"></td><td><input type="radio" name="competences" value="N"></td><td><input type="radio" name="competences" value="+"></td><td><input type="radio" name="competences" value="++"></td><td><input type="text" name="remarque_competences"></td></tr>
-            <tr><td>Satisfaction au poste de travail</td><td><input type="radio" name="satisfaction_poste" value="--"></td><td><input type="radio" name="satisfaction_poste" value="-"></td><td><input type="radio" name="satisfaction_poste" value="N"></td><td><input type="radio" name="satisfaction_poste" value="+"></td><td><input type="radio" name="satisfaction_poste" value="++"></td><td><input type="text" name="remarque_satisfaction_poste"></td></tr>
-            <tr><td>Satisfaction dans l’entreprise</td><td><input type="radio" name="satisfaction_entreprise" value="--"></td><td><input type="radio" name="satisfaction_entreprise" value="-"></td><td><input type="radio" name="satisfaction_entreprise" value="N"></td><td><input type="radio" name="satisfaction_entreprise" value="+"></td><td><input type="radio" name="satisfaction_entreprise" value="++"></td><td><input type="text" name="remarque_satisfaction_entreprise"></td></tr>
+            <script>
+                let criteres = [
+                    "Performance au travail",
+                    "Compétences dans les tâches",
+                    "Satisfaction au poste de travail",
+                    "Satisfaction dans l’entreprise",
+                    "Soin du matériel et des véhicules",
+                    "Comportement envers ses collègues",
+                    "Comportement envers son supérieur",
+                    "Comportement envers les clients",
+                    "Assiduité - Respect horaires - Feuilles d’heures",
+                    "Tenue vestimentaire & hygiène personnelle",
+                    "Prise de responsabilités"
+                ];
+                
+                criteres.forEach((critere, index) => {
+                    document.write(`<tr>
+                        <td>${critere}</td>
+                        <td><input type="radio" name="critere${index}" value="--"></td>
+                        <td><input type="radio" name="critere${index}" value="-"></td>
+                        <td><input type="radio" name="critere${index}" value="N"></td>
+                        <td><input type="radio" name="critere${index}" value="+"></td>
+                        <td><input type="radio" name="critere${index}" value="++"></td>
+                        <td><textarea></textarea></td>
+                    </tr>`);
+                });
+            </script>
         </table>
         
-        <div class="section">
-            <span class="bold">Que peux-tu améliorer ?</span>
-            <div>
-                <label>Personnellement :</label>
-                <textarea name="amelioration_personnel"></textarea>
-            </div>
-            <div>
-                <label>Dans le travail :</label>
-                <textarea name="amelioration_travail"></textarea>
-            </div>
-        </div>
-        
-        <div class="section">
-            <span class="bold">Que pouvons-nous améliorer ?</span>
-            <div>
-                <textarea name="amelioration_global"></textarea>
-            </div>
-        </div>
-        
-        <div class="section">
-            <span class="bold">Décisions prises en commun et délai de réalisation</span>
-            <textarea name="decisions"></textarea>
-            <label>Délai de réalisation : <input type="date" name="delai"></label>
-        </div>
-        
-        <div class="section">
-            <button type="submit">Soumettre</button>
-        </div>
-        
         <footer>
-            <p>Entretien effectué le : <input type="date" name="date_entretien"> Par : <input type="text" name="responsable"> Collaborateur : <input type="text" name="collaborateur"></p>
+            <p>Entretien effectué le : <input type="date" name="date_entretien">  Par : <input type="text" name="responsable">  Collaborateur : <input type="text" name="collaborateur"></p>
         </footer>
+        
+        <button onclick="imprimerPage()">Soumettre</button>
     </div>
 </body>
 </html>
