@@ -9,10 +9,11 @@
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
         th { background-color: #f4f4f4; }
+        td:first-child { text-align: left; }
         .container { max-width: 800px; margin: auto; }
         .section { margin-top: 20px; }
         input, textarea { width: 100%; padding: 8px; margin-top: 5px; }
-        textarea { resize: vertical; }
+        textarea { resize: none; overflow: hidden; min-height: 50px; }
         button { background-color: #28a745; color: white; padding: 10px; border: none; cursor: pointer; position: absolute; right: 20px; bottom: 20px; }
         button:hover { background-color: #218838; }
         .inline { display: flex; gap: 40px; margin-bottom: 15px; }
@@ -22,11 +23,26 @@
         .sub-section { margin-top: 15px; margin-left: 20px; }
         .decisions-section { margin-top: 15px; }
         .decision-item { margin-bottom: 15px; }
+        .radio-cell { text-align: center; }
+        footer .bold { font-weight: bold; }
+        .footer-inline { display: flex; gap: 20px; align-items: center; }
+        .footer-inline label { white-space: nowrap; }
     </style>
     <script>
         function imprimerPage() {
             window.print();
         }
+        function autoResizeTextarea(el) {
+            el.style.height = 'auto';
+            el.style.height = (el.scrollHeight) + 'px';
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("textarea").forEach(textarea => {
+                textarea.addEventListener("input", function() {
+                    autoResizeTextarea(this);
+                });
+            });
+        });
     </script>
 </head>
 <body>
@@ -69,56 +85,56 @@
                 criteres.forEach((critere, index) => {
                     document.write(`<tr>
                         <td>${critere}</td>
-                        <td><input type="radio" name="critere${index}" value="--"></td>
-                        <td><input type="radio" name="critere${index}" value="-"></td>
-                        <td><input type="radio" name="critere${index}" value="N"></td>
-                        <td><input type="radio" name="critere${index}" value="+"></td>
-                        <td><input type="radio" name="critere${index}" value="++"></td>
-                        <td><textarea></textarea></td>
+                        <td class="radio-cell"><input type="radio" name="critere${index}" value="--"></td>
+                        <td class="radio-cell"><input type="radio" name="critere${index}" value="-"></td>
+                        <td class="radio-cell"><input type="radio" name="critere${index}" value="N"></td>
+                        <td class="radio-cell"><input type="radio" name="critere${index}" value="+"></td>
+                        <td class="radio-cell"><input type="radio" name="critere${index}" value="++"></td>
+                        <td><textarea oninput="autoResizeTextarea(this)"></textarea></td>
                     </tr>`); 
                 });
             </script>
         </table>
 
         <div class="section">
-            <label class="bold">Que peux-tu améliorer ?</label>
-            <div class="sub-section">
-                <label>Personnellement : <textarea name="amelioration_personnelle"></textarea></label>
-            </div>
-            <div class="sub-section">
-                <label>Dans le travail : <textarea name="amelioration_travail"></textarea></label>
-            </div>
+            <label class="bold">Que peux-tu améliorer ?</label><br>
+            <label>Personnellement : <textarea name="amelioration_personnelle" oninput="autoResizeTextarea(this)"></textarea></label>
+            <label>Dans le travail : <textarea name="amelioration_travail" oninput="autoResizeTextarea(this)"></textarea></label>
         </div>
 
         <div class="section">
             <label class="bold">Que pouvons-nous améliorer ?</label>
-            <textarea name="amelioration_entreprise"></textarea>
+            <textarea name="amelioration_entreprise" oninput="autoResizeTextarea(this)"></textarea>
         </div>
 
         <div class="section decisions-section">
-            <label class="bold">Décisions prises en commun :</label>
+            <label class="bold">Décisions prises en commun :</label><br>
             <div class="decision-item">
                 <label>Décision 1 :</label>
-                <textarea name="decision_1"></textarea>
-                <label class="bold">Délai pour le réaliser :</label>
+                <textarea name="decision_1" oninput="autoResizeTextarea(this)"></textarea>
+                <label>Délai pour le réaliser :</label>
                 <input type="date" name="delai_realisation_1">
             </div>
             <div class="decision-item">
                 <label>Décision 2 :</label>
-                <textarea name="decision_2"></textarea>
-                <label class="bold">Délai pour le réaliser :</label>
+                <textarea name="decision_2" oninput="autoResizeTextarea(this)"></textarea>
+                <label>Délai pour le réaliser :</label>
                 <input type="date" name="delai_realisation_2">
             </div>
             <div class="decision-item">
                 <label>Décision 3 :</label>
-                <textarea name="decision_3"></textarea>
-                <label class="bold">Délai pour le réaliser :</label>
+                <textarea name="decision_3" oninput="autoResizeTextarea(this)"></textarea>
+                <label>Délai pour le réaliser :</label>
                 <input type="date" name="delai_realisation_3">
             </div>
         </div>
 
         <footer>
-            <p>Entretien effectué le : <input type="date" name="date_entretien">  Par : <input type="text" name="responsable">  Collaborateur : <input type="text" name="collaborateur"></p>
+            <div class="footer-inline">
+                <label class="bold">Entretien effectué le :</label> <input type="date" name="date_entretien">
+                <label>Par :</label> <input type="text" name="responsable">
+                <label>Collaborateur :</label> <input type="text" name="collaborateur">
+            </div>
         </footer>
         
         <button onclick="imprimerPage()">Soumettre</button>
