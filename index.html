@@ -14,7 +14,7 @@
         .section { margin-top: 20px; }
         input, textarea { width: 100%; padding: 8px; margin-top: 5px; }
         textarea { resize: none; overflow: hidden; min-height: 50px; box-sizing: border-box; width: calc(100% - 16px); }
-        button { background-color: #28a745; color: white; padding: 10px; border: none; cursor: pointer; position: absolute; right: 20px; bottom: 20px; }
+        button { background-color: #28a745; color: white; padding: 10px; border: none; cursor: pointer; position: fixed; right: 20px; bottom: 20px; z-index: 1000; }
         button:hover { background-color: #218838; }
         .inline { display: flex; gap: 40px; margin-bottom: 15px; }
         .inline label { flex: 1; }
@@ -27,6 +27,20 @@
         footer .bold { font-weight: bold; }
         .footer-inline { display: flex; gap: 20px; align-items: center; }
         .footer-inline label { white-space: nowrap; }
+
+        /* NEW CSS TO MAKE DELAY FIELDS INLINE */
+        .inline-decision { display: flex; gap: 20px; align-items: center; }
+        .inline-decision label, .inline-decision input { margin-bottom: 0; }
+
+        /* Set the same width for all date fields (reduced width) */
+        input[type="date"] {
+            width: 100px; /* Adjusted width to 100px */
+        }
+
+        /* Make sure buttons are centered in their cells */
+        .radio-cell input[type="radio"] {
+            margin: 0;
+        }
     </style>
     <script>
         function imprimerPage() {
@@ -112,20 +126,26 @@
             <div class="decision-item">
                 <label>Décision 1 :</label>
                 <textarea name="decision_1" oninput="autoResizeTextarea(this)"></textarea>
-                <label>Délai pour le réaliser :</label>
-                <input type="date" name="delai_realisation_1">
+                <div class="inline-decision">
+                    <label>Délai pour la réaliser :</label>
+                    <input type="date" name="delai_realisation_1">
+                </div>
             </div>
             <div class="decision-item">
                 <label>Décision 2 :</label>
                 <textarea name="decision_2" oninput="autoResizeTextarea(this)"></textarea>
-                <label>Délai pour le réaliser :</label>
-                <input type="date" name="delai_realisation_2">
+                <div class="inline-decision">
+                    <label>Délai pour la réaliser :</label>
+                    <input type="date" name="delai_realisation_2">
+                </div>
             </div>
             <div class="decision-item">
                 <label>Décision 3 :</label>
                 <textarea name="decision_3" oninput="autoResizeTextarea(this)"></textarea>
-                <label>Délai pour le réaliser :</label>
-                <input type="date" name="delai_realisation_3">
+                <div class="inline-decision">
+                    <label>Délai pour la réaliser :</label>
+                    <input type="date" name="delai_realisation_3">
+                </div>
             </div>
         </div>
 
@@ -137,7 +157,7 @@
             </div>
         </footer>
         
-        <button onclick="imprimerPage()">Soumettre</button>
+        <button onclick="imprimerPage()">Imprimer</button>
     </div>
 </body>
 </html>
