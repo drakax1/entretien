@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Évaluation et Entretien Annuel</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .container { max-width: 800px; margin: auto; }
+        .section { margin-top: 20px; }
+        input, textarea { width: 100%; padding: 8px; margin-top: 5px; }
+        button { background-color: #28a745; color: white; padding: 10px; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        .inline { display: flex; gap: 20px; }
+        .inline label { flex: 1; }
+        .bold { font-weight: bold; display: block; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Évaluation et Entretien Annuel</h2>
+        <div class="inline">
+            <label>Nom : <input type="text" name="nom"></label>
+            <label>Prénom : <input type="text" name="prenom"></label>
+        </div>
+        
+        <table>
+            <tr>
+                <th>Critères</th>
+                <th>--</th>
+                <th>-</th>
+                <th>N</th>
+                <th>+</th>
+                <th>++</th>
+                <th>Remarques</th>
+            </tr>
+            <tr><td>Performance au travail</td><td><input type="radio" name="performance" value="--"></td><td><input type="radio" name="performance" value="-"></td><td><input type="radio" name="performance" value="N"></td><td><input type="radio" name="performance" value="+"></td><td><input type="radio" name="performance" value="++"></td><td><input type="text" name="remarque_performance"></td></tr>
+            <tr><td>Compétences dans les tâches</td></tr>
+            <tr><td>Satisfaction au poste de travail</td></tr>
+            <tr><td>Satisfaction dans l’entreprise</td></tr>
+            <tr><td>Soin du matériel et des véhicules</td></tr>
+            <tr><td>Comportement envers ses collègues</td></tr>
+            <tr><td>Comportement envers son supérieur</td></tr>
+            <tr><td>Comportement envers les clients</td></tr>
+            <tr><td>Assiduité - Respect horaires - Feuilles d’heures</td></tr>
+            <tr><td>Tenue vestimentaire & hygiène personnelle</td></tr>
+            <tr><td>Prise de responsabilités</td></tr>
+        </table>
+        
+        <div class="section">
+            <span class="bold">Que peux-tu améliorer ?</span>
+            <div>
+                <label>Personnellement</label>
+                <textarea name="amelioration_personnel"></textarea>
+            </div>
+            <div>
+                <label>Dans le travail</label>
+                <textarea name="amelioration_travail"></textarea>
+            </div>
+        </div>
+        
+        <div class="section">
+            <span class="bold">Que pouvons-nous améliorer ?</span>
+            <div>
+                <textarea name="amelioration_global"></textarea>
+            </div>
+        </div>
+        
+        <div class="section">
+            <span class="bold">Décisions prises en commun et délai de réalisation</span>
+            <textarea name="decisions"></textarea>
+            <label>Délai : <input type="text" name="delai"></label>
+        </div>
+        
+        <div class="section">
+            <button type="submit">Soumettre</button>
+        </div>
+        
+        <footer>
+            <p>Entretien effectué le <input type="date" name="date_entretien"> Par <input type="text" name="responsable"> Collaborateur <input type="text" name="collaborateur"></p>
+        </footer>
+    </div>
+</body>
+</html>
