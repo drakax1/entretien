@@ -14,7 +14,7 @@
         input, textarea { width: 100%; padding: 8px; margin-top: 5px; }
         button { background-color: #28a745; color: white; padding: 10px; border: none; cursor: pointer; }
         button:hover { background-color: #218838; }
-        .inline { display: flex; gap: 20px; }
+        .inline { display: flex; gap: 40px; margin-bottom: 15px; }
         .inline label { flex: 1; }
         .bold { font-weight: bold; display: block; margin-top: 10px; }
     </style>
@@ -25,6 +25,10 @@
         <div class="inline">
             <label>Nom : <input type="text" name="nom"></label>
             <label>Prénom : <input type="text" name="prenom"></label>
+        </div>
+        <div class="inline">
+            <label>Date de naissance : <input type="date" name="date_naissance"></label>
+            <label>Entrée en fonction le : <input type="date" name="entree_fonction"></label>
         </div>
         
         <table>
@@ -38,26 +42,19 @@
                 <th>Remarques</th>
             </tr>
             <tr><td>Performance au travail</td><td><input type="radio" name="performance" value="--"></td><td><input type="radio" name="performance" value="-"></td><td><input type="radio" name="performance" value="N"></td><td><input type="radio" name="performance" value="+"></td><td><input type="radio" name="performance" value="++"></td><td><input type="text" name="remarque_performance"></td></tr>
-            <tr><td>Compétences dans les tâches</td></tr>
-            <tr><td>Satisfaction au poste de travail</td></tr>
-            <tr><td>Satisfaction dans l’entreprise</td></tr>
-            <tr><td>Soin du matériel et des véhicules</td></tr>
-            <tr><td>Comportement envers ses collègues</td></tr>
-            <tr><td>Comportement envers son supérieur</td></tr>
-            <tr><td>Comportement envers les clients</td></tr>
-            <tr><td>Assiduité - Respect horaires - Feuilles d’heures</td></tr>
-            <tr><td>Tenue vestimentaire & hygiène personnelle</td></tr>
-            <tr><td>Prise de responsabilités</td></tr>
+            <tr><td>Compétences dans les tâches</td><td><input type="radio" name="competences" value="--"></td><td><input type="radio" name="competences" value="-"></td><td><input type="radio" name="competences" value="N"></td><td><input type="radio" name="competences" value="+"></td><td><input type="radio" name="competences" value="++"></td><td><input type="text" name="remarque_competences"></td></tr>
+            <tr><td>Satisfaction au poste de travail</td><td><input type="radio" name="satisfaction_poste" value="--"></td><td><input type="radio" name="satisfaction_poste" value="-"></td><td><input type="radio" name="satisfaction_poste" value="N"></td><td><input type="radio" name="satisfaction_poste" value="+"></td><td><input type="radio" name="satisfaction_poste" value="++"></td><td><input type="text" name="remarque_satisfaction_poste"></td></tr>
+            <tr><td>Satisfaction dans l’entreprise</td><td><input type="radio" name="satisfaction_entreprise" value="--"></td><td><input type="radio" name="satisfaction_entreprise" value="-"></td><td><input type="radio" name="satisfaction_entreprise" value="N"></td><td><input type="radio" name="satisfaction_entreprise" value="+"></td><td><input type="radio" name="satisfaction_entreprise" value="++"></td><td><input type="text" name="remarque_satisfaction_entreprise"></td></tr>
         </table>
         
         <div class="section">
             <span class="bold">Que peux-tu améliorer ?</span>
             <div>
-                <label>Personnellement</label>
+                <label>Personnellement :</label>
                 <textarea name="amelioration_personnel"></textarea>
             </div>
             <div>
-                <label>Dans le travail</label>
+                <label>Dans le travail :</label>
                 <textarea name="amelioration_travail"></textarea>
             </div>
         </div>
@@ -72,7 +69,7 @@
         <div class="section">
             <span class="bold">Décisions prises en commun et délai de réalisation</span>
             <textarea name="decisions"></textarea>
-            <label>Délai : <input type="text" name="delai"></label>
+            <label>Délai de réalisation : <input type="date" name="delai"></label>
         </div>
         
         <div class="section">
@@ -80,7 +77,7 @@
         </div>
         
         <footer>
-            <p>Entretien effectué le <input type="date" name="date_entretien"> Par <input type="text" name="responsable"> Collaborateur <input type="text" name="collaborateur"></p>
+            <p>Entretien effectué le : <input type="date" name="date_entretien"> Par : <input type="text" name="responsable"> Collaborateur : <input type="text" name="collaborateur"></p>
         </footer>
     </div>
 </body>
