@@ -1,144 +1,190 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"> <!-- Définit le jeu de caractères (UTF-8) pour le document -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Règle l'affichage pour les appareils mobiles -->
-    <title>Évaluation et Entretien Annuel</title> <!-- Le titre qui apparaîtra dans l'onglet du navigateur -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Évaluation et Entretien Annuel</title>
     <style>
-        /* Définition de styles pour la page, tels que la police, la mise en page et l'apparence des éléments */
+        /* Styles existants */
         body { 
-            font-family: Arial, sans-serif; /* Choix de la police de caractères pour tout le corps de la page */
-            margin: 20px; /* Marge autour du contenu de la page */
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
         .container { 
-            max-width: 800px; /* La largeur maximale de la zone principale du formulaire (800px) */
-            margin: auto; /* Centre le contenu horizontalement */
+            max-width: 800px;
+            margin: auto;
         }
-
         table { 
-            width: 100%; /* La table occupe toute la largeur de son conteneur */
-            border-collapse: collapse; /* Empêche les doubles bordures entre les cellules */
-            margin-top: 20px; /* Ajoute un espace au-dessus de la table */
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
         th, td { 
-            border: 1px solid #ccc; /* Définit une bordure claire pour les cellules de la table */
-            padding: 10px; /* Espacement interne des cellules */
-            text-align: center; /* Centre le texte à l'intérieur des cellules */
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
         }
         th { 
-            background-color: #f4f4f4; /* Donne une couleur de fond grise claire aux en-têtes de table */
+            background-color: #f4f4f4;
         }
         td:first-child { 
-            text-align: left; /* Aligne le texte à gauche pour la première colonne de la table (les critères) */
+            text-align: left;
         }
-
         input, textarea { 
-            width: 100%; /* Les champs de saisie (input) et les zones de texte (textarea) occupent toute la largeur de leur conteneur */
-            padding: 8px; /* Espacement interne pour un confort de saisie */
-            margin-top: 5px; /* Espacement entre les éléments du formulaire */
-            box-sizing: border-box; /* Inclut les marges et le padding dans la largeur de l'élément */
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
         }
-
         textarea { 
-            resize: none; /* Empêche le redimensionnement de la zone de texte */
-            overflow: hidden; /* Cache les barres de défilement si le contenu dépasse */
-            min-height: 50px; /* Hauteur minimale de la zone de texte */
+            resize: none;
+            overflow: hidden;
+            min-height: 50px;
         }
-
         button { 
-            background-color: #28a745; /* Couleur de fond verte pour le bouton */
-            color: white; /* Texte blanc sur le bouton */
-            padding: 10px; /* Espacement interne du bouton */
-            border: none; /* Pas de bordure autour du bouton */
-            cursor: pointer; /* Le curseur se transforme en main lorsqu'on passe dessus */
-            position: fixed; /* Position fixe pour le bouton en bas à droite */
-            right: 20px; 
-            bottom: 20px;
-            z-index: 1000; /* Assure que le bouton soit toujours visible */
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
         }
         button:hover { 
-            background-color: #218838; /* Change la couleur de fond du bouton au survol */
+            background-color: #218838;
         }
-
         .inline { 
-            display: flex; /* Utilisation du flexbox pour aligner les éléments horizontalement */
-            gap: 40px; /* Espacement entre les éléments de la ligne */
-            margin-bottom: 15px; /* Espacement sous chaque ligne d'éléments */
+            display: flex;
+            gap: 40px;
+            margin-bottom: 15px;
         }
-
         .inline label { 
-            flex: 1; /* Les labels prennent toute la largeur disponible de manière égale */
+            flex: 1;
         }
-
         .bold { 
-            font-weight: bold; /* Applique un style de texte en gras */
-            display: block; /* Force l'élément à se comporter comme un bloc (sur une nouvelle ligne) */
-            margin-top: 10px; /* Espace entre les éléments de type bloc */
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
         }
-
         footer { 
-            margin-top: 20px; /* Ajoute de l'espace au-dessus du pied de page */
+            margin-top: 20px;
         }
-
         .sub-section { 
-            margin-top: 15px; 
-            margin-left: 20px; /* Ajoute un décalage à gauche pour les sous-sections */
+            margin-top: 15px;
+            margin-left: 20px;
         }
-
         .decisions-section { 
-            margin-top: 15px; /* Espace au-dessus des décisions prises */
+            margin-top: 15px;
         }
-
         .decision-item { 
-            margin-bottom: 15px; /* Espace entre chaque décision */
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            padding: 10px;
         }
-
         .radio-cell { 
-            text-align: center; /* Centre les boutons radio dans leur cellule */
+            text-align: center;
         }
-
         footer .bold { 
-            font-weight: bold; /* Le texte du footer sera en gras */
+            font-weight: bold;
         }
-
         .footer-inline { 
-            display: flex; /* Utilisation de flexbox pour aligner les éléments horizontalement dans le footer */
-            gap: 20px; /* Espacement entre les éléments */
-            align-items: center; /* Centrer verticalement les éléments */
+            display: flex;
+            gap: 20px;
+            align-items: center;
         }
-
         .footer-inline label { 
-            white-space: nowrap; /* Empêche le texte de se couper sur plusieurs lignes dans le footer */
+            white-space: nowrap;
         }
-
-        /* Champs de date spécifiques, pour réduire la largeur des champs de type date */
         input[type="date"] {
-            width: 100px; /* Largeur des champs de date ajustée à 100px */
+            width: 100px;
         }
-
-        /* Centrer les boutons radio dans leur cellule */
         .radio-cell input[type="radio"] {
-            margin: 0; /* Enlève toute marge qui pourrait perturber l'alignement */
+            margin: 0;
+        }
+        /* Boutons fixes pour la gestion des décisions */
+        #decision-buttons {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1000;
+        }
+        #decision-buttons button {
+            margin-right: 10px;
+        }
+        /* Bouton d'impression déjà en position fixe */
+        #print-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
         }
     </style>
     <script>
         // Fonction d'impression de la page
         function imprimerPage() {
-            window.print(); /* Ouvre la fenêtre d'impression du navigateur */
+            window.print();
         }
 
-        // Fonction pour ajuster la hauteur des zones de texte (textarea) en fonction de leur contenu
+        // Fonction pour ajuster la hauteur des zones de texte (textarea)
         function autoResizeTextarea(el) {
-            el.style.height = 'auto'; /* Réinitialise la hauteur */
-            el.style.height = (el.scrollHeight) + 'px'; /* Ajuste la hauteur à la hauteur du contenu */
+            el.style.height = 'auto';
+            el.style.height = (el.scrollHeight) + 'px';
         }
 
-        // Attendre que le DOM soit chargé avant d'ajouter des événements aux textarea
+        // Mise à jour de la numérotation des décisions
+        function updateDecisionNumbers() {
+            const decisions = document.querySelectorAll('#decisions .decision-item');
+            decisions.forEach((item, index) => {
+                const label = item.querySelector('label');
+                if(label) {
+                    label.textContent = "Décision " + (index + 1) + " :";
+                }
+                // Met à jour les attributs name pour assurer une numérotation cohérente
+                const textarea = item.querySelector('textarea');
+                if(textarea) {
+                    textarea.setAttribute("name", "decision_" + (index + 1));
+                }
+                const inputDate = item.querySelector('input[type="date"]');
+                if(inputDate) {
+                    inputDate.setAttribute("name", "delai_realisation_" + (index + 1));
+                }
+            });
+        }
+
+        // Fonction pour ajouter une décision
+        function addDecision() {
+            const container = document.getElementById('decisions');
+            const currentCount = container.querySelectorAll('.decision-item').length;
+            const decisionNumber = currentCount + 1;
+            const decisionDiv = document.createElement('div');
+            decisionDiv.className = 'decision-item';
+            decisionDiv.innerHTML = `
+                <label>Décision ${decisionNumber} :</label>
+                <textarea name="decision_${decisionNumber}" oninput="autoResizeTextarea(this)"></textarea>
+                <div class="inline-decision">
+                    <label>Délai pour la réaliser :</label>
+                    <input type="date" name="delai_realisation_${decisionNumber}">
+                </div>
+            `;
+            container.appendChild(decisionDiv);
+            updateDecisionNumbers();
+        }
+
+        // Fonction pour supprimer la dernière décision (sauf la première)
+        function removeDecision() {
+            const container = document.getElementById('decisions');
+            const decisions = container.querySelectorAll('.decision-item');
+            if(decisions.length > 1) {
+                container.removeChild(decisions[decisions.length - 1]);
+                updateDecisionNumbers();
+            } else {
+                alert("La première décision ne peut pas être supprimée.");
+            }
+        }
+
+        // Ajout du redimensionnement automatique sur les textarea au chargement du DOM
         document.addEventListener("DOMContentLoaded", function() {
-            // Applique un redimensionnement automatique à toutes les zones de texte
             document.querySelectorAll("textarea").forEach(textarea => {
                 textarea.addEventListener("input", function() {
-                    autoResizeTextarea(this); /* Appelle la fonction pour ajuster la hauteur au contenu */
+                    autoResizeTextarea(this);
                 });
             });
         });
@@ -146,19 +192,19 @@
 </head>
 <body>
     <div class="container">
+        <!-- SECTION: Titre et Informations Personnelles -->
         <h2>Évaluation et Entretien Annuel</h2>
-        <!-- Section d'entrée des informations personnelles -->
-        <div class="inline">
+        <div id="informations-personnelles" class="inline">
             <label>Nom : <input type="text" name="nom"></label>
             <label>Prénom : <input type="text" name="prenom"></label>
         </div>
-        <div class="inline">
+        <div id="dates-personnelles" class="inline">
             <label>Date de naissance : <input type="date" name="date_naissance"></label>
             <label>Entrée en fonction le : <input type="date" name="entree_fonction"></label>
         </div>
         
-        <!-- Table des critères d'évaluation -->
-        <table>
+        <!-- SECTION: Critères d'Évaluation -->
+        <table id="criteres-evaluation">
             <tr>
                 <th>Critères</th>
                 <th>--</th>
@@ -169,7 +215,6 @@
                 <th>Remarques</th>
             </tr>
             <script>
-                // Liste des critères d'évaluation
                 let criteres = [
                     "Performance au travail",
                     "Compétences dans les tâches",
@@ -184,7 +229,6 @@
                     "Prise de responsabilités"
                 ];
                 
-                // Génère les lignes de la table pour chaque critère
                 criteres.forEach((critere, index) => {
                     document.write(`<tr>
                         <td>${critere}</td>
@@ -194,26 +238,28 @@
                         <td class="radio-cell"><input type="radio" name="critere${index}" value="+"></td>
                         <td class="radio-cell"><input type="radio" name="critere${index}" value="++"></td>
                         <td><textarea oninput="autoResizeTextarea(this)"></textarea></td>
-                    </tr>`); 
+                    </tr>`);
                 });
             </script>
         </table>
 
-        <!-- Sections pour les améliorations -->
-        <div class="section">
+        <!-- SECTION: Améliorations Personnelles et Professionnelles -->
+        <div id="ameliorations" class="section">
             <label class="bold">Que peux-tu améliorer ?</label><br>
             <label>Personnellement : <textarea name="amelioration_personnelle" oninput="autoResizeTextarea(this)"></textarea></label>
             <label>Dans le travail : <textarea name="amelioration_travail" oninput="autoResizeTextarea(this)"></textarea></label>
         </div>
 
-        <div class="section">
+        <!-- SECTION: Améliorations de l'Entreprise -->
+        <div id="amelioration-entreprise" class="section">
             <label class="bold">Que pouvons-nous améliorer ?</label>
             <textarea name="amelioration_entreprise" oninput="autoResizeTextarea(this)"></textarea>
         </div>
 
-        <!-- Section des décisions -->
-        <div class="section decisions-section">
+        <!-- SECTION: Décisions -->
+        <div id="decisions" class="section decisions-section">
             <label class="bold">Décisions prises en commun :</label><br>
+            <!-- Base : une seule décision -->
             <div class="decision-item">
                 <label>Décision 1 :</label>
                 <textarea name="decision_1" oninput="autoResizeTextarea(this)"></textarea>
@@ -222,35 +268,28 @@
                     <input type="date" name="delai_realisation_1">
                 </div>
             </div>
-            <div class="decision-item">
-                <label>Décision 2 :</label>
-                <textarea name="decision_2" oninput="autoResizeTextarea(this)"></textarea>
-                <div class="inline-decision">
-                    <label>Délai pour la réaliser :</label>
-                    <input type="date" name="delai_realisation_2">
-                </div>
-            </div>
-            <div class="decision-item">
-                <label>Décision 3 :</label>
-                <textarea name="decision_3" oninput="autoResizeTextarea(this)"></textarea>
-                <div class="inline-decision">
-                    <label>Délai pour la réaliser :</label>
-                    <input type="date" name="delai_realisation_3">
-                </div>
-            </div>
         </div>
 
-        <!-- Footer avec les informations de l'entretien -->
-        <footer>
+        <!-- Boutons fixes pour ajouter/supprimer des décisions -->
+        <div id="decision-buttons">
+            <button onclick="addDecision()">Ajouter une décision</button>
+            <button onclick="removeDecision()">Supprimer une décision</button>
+        </div>
+
+        <!-- SECTION: Informations de l'Entretien (Footer) -->
+        <footer id="footer-entretien">
             <div class="footer-inline">
-                <label class="bold">Entretien effectué le :</label> <input type="date" name="date_entretien">
-                <label>Par :</label> <input type="text" name="responsable">
-                <label>Collaborateur :</label> <input type="text" name="collaborateur">
+                <label class="bold">Entretien effectué le :</label>
+                <input type="date" name="date_entretien">
+                <label>Par :</label>
+                <input type="text" name="responsable">
+                <label>Collaborateur :</label>
+                <input type="text" name="collaborateur">
             </div>
         </footer>
         
-        <!-- Bouton pour imprimer -->
-        <button onclick="imprimerPage()">Imprimer</button>
+        <!-- Bouton d'impression fixé -->
+        <button id="print-button" onclick="imprimerPage()">Imprimer</button>
     </div>
 </body>
 </html>
