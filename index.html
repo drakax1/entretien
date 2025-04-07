@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Évaluation et Entretien Annuel</title>
     <style>
-        /* Styles existants */
         body { 
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -105,9 +104,12 @@
             bottom: 80px;
             right: 20px;
             z-index: 1000;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
         }
         #decision-buttons button {
-            margin-right: 10px;
+            margin-right: 0;
         }
         /* Bouton d'impression déjà en position fixe */
         #print-button {
@@ -118,18 +120,15 @@
         }
     </style>
     <script>
-        // Fonction d'impression de la page
         function imprimerPage() {
             window.print();
         }
 
-        // Fonction pour ajuster la hauteur des zones de texte (textarea)
         function autoResizeTextarea(el) {
             el.style.height = 'auto';
             el.style.height = (el.scrollHeight) + 'px';
         }
 
-        // Mise à jour de la numérotation des décisions
         function updateDecisionNumbers() {
             const decisions = document.querySelectorAll('#decisions .decision-item');
             decisions.forEach((item, index) => {
@@ -137,7 +136,6 @@
                 if(label) {
                     label.textContent = "Décision " + (index + 1) + " :";
                 }
-                // Met à jour les attributs name pour assurer une numérotation cohérente
                 const textarea = item.querySelector('textarea');
                 if(textarea) {
                     textarea.setAttribute("name", "decision_" + (index + 1));
@@ -149,7 +147,6 @@
             });
         }
 
-        // Fonction pour ajouter une décision
         function addDecision() {
             const container = document.getElementById('decisions');
             const currentCount = container.querySelectorAll('.decision-item').length;
@@ -168,7 +165,6 @@
             updateDecisionNumbers();
         }
 
-        // Fonction pour supprimer la dernière décision (sauf la première)
         function removeDecision() {
             const container = document.getElementById('decisions');
             const decisions = container.querySelectorAll('.decision-item');
@@ -180,7 +176,6 @@
             }
         }
 
-        // Ajout du redimensionnement automatique sur les textarea au chargement du DOM
         document.addEventListener("DOMContentLoaded", function() {
             document.querySelectorAll("textarea").forEach(textarea => {
                 textarea.addEventListener("input", function() {
@@ -192,7 +187,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- SECTION: Titre et Informations Personnelles -->
         <h2>Évaluation et Entretien Annuel</h2>
         <div id="informations-personnelles" class="inline">
             <label>Nom : <input type="text" name="nom"></label>
@@ -203,7 +197,6 @@
             <label>Entrée en fonction le : <input type="date" name="entree_fonction"></label>
         </div>
         
-        <!-- SECTION: Critères d'Évaluation -->
         <table id="criteres-evaluation">
             <tr>
                 <th>Critères</th>
@@ -243,23 +236,19 @@
             </script>
         </table>
 
-        <!-- SECTION: Améliorations Personnelles et Professionnelles -->
         <div id="ameliorations" class="section">
             <label class="bold">Que peux-tu améliorer ?</label><br>
             <label>Personnellement : <textarea name="amelioration_personnelle" oninput="autoResizeTextarea(this)"></textarea></label>
             <label>Dans le travail : <textarea name="amelioration_travail" oninput="autoResizeTextarea(this)"></textarea></label>
         </div>
 
-        <!-- SECTION: Améliorations de l'Entreprise -->
         <div id="amelioration-entreprise" class="section">
             <label class="bold">Que pouvons-nous améliorer ?</label>
             <textarea name="amelioration_entreprise" oninput="autoResizeTextarea(this)"></textarea>
         </div>
 
-        <!-- SECTION: Décisions -->
         <div id="decisions" class="section decisions-section">
             <label class="bold">Décisions prises en commun :</label><br>
-            <!-- Base : une seule décision -->
             <div class="decision-item">
                 <label>Décision 1 :</label>
                 <textarea name="decision_1" oninput="autoResizeTextarea(this)"></textarea>
@@ -270,13 +259,11 @@
             </div>
         </div>
 
-        <!-- Boutons fixes pour ajouter/supprimer des décisions -->
         <div id="decision-buttons">
             <button onclick="addDecision()">Ajouter une décision</button>
             <button onclick="removeDecision()">Supprimer une décision</button>
         </div>
 
-        <!-- SECTION: Informations de l'Entretien (Footer) -->
         <footer id="footer-entretien">
             <div class="footer-inline">
                 <label class="bold">Entretien effectué le :</label>
@@ -288,7 +275,6 @@
             </div>
         </footer>
         
-        <!-- Bouton d'impression fixé -->
         <button id="print-button" onclick="imprimerPage()">Imprimer</button>
     </div>
 </body>
