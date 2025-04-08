@@ -1,282 +1,316 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Évaluation et Entretien Annuel</title>
-    <style>
-        body { 
-            font-family: Arial, sans-serif;
-            margin: 20px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Évaluation et Entretien Annuel</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .container { 
+      max-width: 800px;
+      margin: auto;
+    }
+    table { 
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td { 
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    th { 
+      background-color: #f4f4f4;
+    }
+    td:first-child { 
+      text-align: left;
+    }
+    input, textarea { 
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    textarea { 
+      resize: none;
+      overflow: hidden;
+      min-height: 50px;
+    }
+    button { 
+      background-color: #28a745;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover { 
+      background-color: #218838;
+    }
+    .inline { 
+      display: flex;
+      gap: 40px;
+      margin-bottom: 15px;
+    }
+    .inline label { 
+      flex: 1;
+    }
+    .bold { 
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    .sub-section { 
+      margin-top: 15px;
+      margin-left: 20px;
+    }
+    .decisions-section { 
+      margin-top: 15px;
+    }
+    .decision-item { 
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+    .radio-cell { 
+      text-align: center;
+    }
+    .footer-inline {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .footer-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .footer-row label {
+      flex: 1;
+      white-space: nowrap;
+    }
+    .footer-row input[type="date"],
+    .footer-row input[type="text"] {
+      flex: 2;
+    }
+    input[type="date"] {
+      width: 100px;
+    }
+    .radio-cell input[type="radio"] {
+      margin: 0;
+    }
+    /* Bouton d'impression flottant */
+    #print-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      max-width: calc(100vw - 850px);
+    }
+    /* Masquer les éléments avec la classe no-print à l'impression */
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+    }
+    /* Titre "ENTRETIEN ANNUEL" */
+    #entretien-annuel-title {
+      background-color: #666; /* Gris foncé */
+      color: white;
+      text-align: center;
+      text-transform: uppercase;
+      padding: 10px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    /* Titre "COLLABORATEUR" */
+    #collaborateur-title {
+      background-color: #999; /* Gris clair */
+      color: white;
+      text-align: center;
+      text-transform: uppercase;
+      padding: 10px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    /* Titre du tableau "TABLEAU D'ÉVALUATION" : on supprime le style précédent et on applique le même que pour COLLABORATEUR */
+    #tableau-title td {
+      background-color: #999; /* Même gris que "COLLABORATEUR" */
+      color: white;
+      text-align: center;
+      text-transform: uppercase;
+      padding: 10px;
+      font-weight: bold;
+      vertical-align: middle;
+    }
+  </style>
+  <script>
+    function imprimerPage() {
+      window.print();
+    }
+    function autoResizeTextarea(el) {
+      el.style.height = 'auto';
+      el.style.height = (el.scrollHeight) + 'px';
+    }
+    function updateDecisionNumbers() {
+      const decisions = document.querySelectorAll('#decisions .decision-item');
+      decisions.forEach((item, index) => {
+        const label = item.querySelector('label');
+        if(label) {
+          label.textContent = "Décision " + (index + 1) + " :";
         }
-        .container { 
-            max-width: 800px;
-            margin: auto;
+        const textarea = item.querySelector('textarea');
+        if(textarea) {
+          textarea.setAttribute("name", "decision_" + (index + 1));
         }
-        table { 
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        const inputDate = item.querySelector('input[type="date"]');
+        if(inputDate) {
+          inputDate.setAttribute("name", "delai_realisation_" + (index + 1));
         }
-        th, td { 
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-        }
-        th { 
-            background-color: #f4f4f4;
-        }
-        td:first-child { 
-            text-align: left;
-        }
-        input, textarea { 
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-        textarea { 
-            resize: none;
-            overflow: hidden;
-            min-height: 50px;
-        }
-        button { 
-            background-color: #28a745;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover { 
-            background-color: #218838;
-        }
-        .inline { 
-            display: flex;
-            gap: 40px;
-            margin-bottom: 15px;
-        }
-        .inline label { 
-            flex: 1;
-        }
-        .bold { 
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-        }
-        .sub-section { 
-            margin-top: 15px;
-            margin-left: 20px;
-        }
-        .decisions-section { 
-            margin-top: 15px;
-        }
-        .decision-item { 
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            padding: 10px;
-        }
-        .radio-cell { 
-            text-align: center;
-        }
-        .footer-inline {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .footer-row {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .footer-row label {
-            flex: 1;
-            white-space: nowrap;
-        }
-        .footer-row input[type="date"],
-        .footer-row input[type="text"] {
-            flex: 2;
-        }
-        input[type="date"] {
-            width: 100px;
-        }
-        .radio-cell input[type="radio"] {
-            margin: 0;
-        }
-        /* Bouton d'impression flottant */
-        #print-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            max-width: calc(100vw - 850px);
-        }
-        /* Masquer les éléments avec la classe no-print à l'impression */
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-        }
-    </style>
-    <script>
-        function imprimerPage() {
-            window.print();
-        }
-
-        function autoResizeTextarea(el) {
-            el.style.height = 'auto';
-            el.style.height = (el.scrollHeight) + 'px';
-        }
-
-        function updateDecisionNumbers() {
-            const decisions = document.querySelectorAll('#decisions .decision-item');
-            decisions.forEach((item, index) => {
-                const label = item.querySelector('label');
-                if(label) {
-                    label.textContent = "Décision " + (index + 1) + " :";
-                }
-                const textarea = item.querySelector('textarea');
-                if(textarea) {
-                    textarea.setAttribute("name", "decision_" + (index + 1));
-                }
-                const inputDate = item.querySelector('input[type="date"]');
-                if(inputDate) {
-                    inputDate.setAttribute("name", "delai_realisation_" + (index + 1));
-                }
-            });
-        }
-
-        function addDecision() {
-            const container = document.getElementById('decisions');
-            const currentCount = container.querySelectorAll('.decision-item').length;
-            const decisionNumber = currentCount + 1;
-            const decisionDiv = document.createElement('div');
-            decisionDiv.className = 'decision-item';
-            decisionDiv.innerHTML = `
-                <label>Décision ${decisionNumber} :</label>
-                <textarea name="decision_${decisionNumber}" oninput="autoResizeTextarea(this)"></textarea>
-                <div class="inline-decision">
-                    <label>Délai pour la réaliser :</label>
-                    <input type="date" name="delai_realisation_${decisionNumber}">
-                </div>
-            `;
-            container.insertBefore(decisionDiv, document.getElementById('decision-controls'));
-            updateDecisionNumbers();
-        }
-
-        function removeDecision() {
-            const container = document.getElementById('decisions');
-            const decisions = container.querySelectorAll('.decision-item');
-            if(decisions.length > 1) {
-                container.removeChild(decisions[decisions.length - 1]);
-                updateDecisionNumbers();
-            } else {
-                alert("La première décision ne peut pas être supprimée.");
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll("textarea").forEach(textarea => {
-                textarea.addEventListener("input", function() {
-                    autoResizeTextarea(this);
-                });
-            });
+      });
+    }
+    function addDecision() {
+      const container = document.getElementById('decisions');
+      const currentCount = container.querySelectorAll('.decision-item').length;
+      const decisionNumber = currentCount + 1;
+      const decisionDiv = document.createElement('div');
+      decisionDiv.className = 'decision-item';
+      decisionDiv.innerHTML = `
+          <label>Décision ${decisionNumber} :</label>
+          <textarea name="decision_${decisionNumber}" oninput="autoResizeTextarea(this)"></textarea>
+          <div class="inline-decision">
+              <label>Délai pour la réaliser :</label>
+              <input type="date" name="delai_realisation_${decisionNumber}">
+          </div>
+      `;
+      container.insertBefore(decisionDiv, document.getElementById('decision-controls'));
+      updateDecisionNumbers();
+    }
+    function removeDecision() {
+      const container = document.getElementById('decisions');
+      const decisions = container.querySelectorAll('.decision-item');
+      if(decisions.length > 1) {
+        container.removeChild(decisions[decisions.length - 1]);
+        updateDecisionNumbers();
+      } else {
+        alert("La première décision ne peut pas être supprimée.");
+      }
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll("textarea").forEach(textarea => {
+        textarea.addEventListener("input", function() {
+          autoResizeTextarea(this);
         });
-    </script>
+      });
+    });
+  </script>
 </head>
 <body>
-    <div class="container">
-        <h2>Évaluation et Entretien Annuel</h2>
-        <div id="informations-personnelles" class="inline">
-            <label>Nom : <input type="text" name="nom"></label>
-            <label>Prénom : <input type="text" name="prenom"></label>
-        </div>
-        <div id="dates-personnelles" class="inline">
-            <label>Date de naissance : <input type="date" name="date_naissance"></label>
-            <label>Entrée en fonction le : <input type="date" name="entree_fonction"></label>
-        </div>
-        
-        <table id="criteres-evaluation">
-            <tr>
-                <th>Critères</th>
-                <th>--</th>
-                <th>-</th>
-                <th>N</th>
-                <th>+</th>
-                <th>++</th>
-                <th>Remarques</th>
-            </tr>
-            <script>
-                let criteres = [
-                    "Performance au travail",
-                    "Compétences dans les tâches",
-                    "Satisfaction au poste de travail",
-                    "Satisfaction dans l’entreprise",
-                    "Soin du matériel et des véhicules",
-                    "Comportement envers ses collègues",
-                    "Comportement envers son supérieur",
-                    "Comportement envers les clients",
-                    "Assiduité - Respect horaires - Feuilles d’heures",
-                    "Tenue vestimentaire & hygiène personnelle",
-                    "Prise de responsabilités"
-                ];
-                
-                criteres.forEach((critere, index) => {
-                    document.write(`<tr>
-                        <td>${critere}</td>
-                        <td class="radio-cell"><input type="radio" name="critere${index}" value="--"></td>
-                        <td class="radio-cell"><input type="radio" name="critere${index}" value="-"></td>
-                        <td class="radio-cell"><input type="radio" name="critere${index}" value="N"></td>
-                        <td class="radio-cell"><input type="radio" name="critere${index}" value="+"></td>
-                        <td class="radio-cell"><input type="radio" name="critere${index}" value="++"></td>
-                        <td><textarea oninput="autoResizeTextarea(this)"></textarea></td>
-                    </tr>`);
-                });
-            </script>
-        </table>
+  <div class="container">
+    <!-- Titre "ENTRETIEN ANNUEL" -->
+    <div id="entretien-annuel-title">ENTRETIEN ANNUEL</div>
 
-        <div id="ameliorations" class="section">
-            <label class="bold">Que peux-tu améliorer ?</label><br>
-            <label>Personnellement : <textarea name="amelioration_personnelle" oninput="autoResizeTextarea(this)"></textarea></label>
-            <label>Dans le travail : <textarea name="amelioration_travail" oninput="autoResizeTextarea(this)"></textarea></label>
-        </div>
+    <!-- Titre "COLLABORATEUR" -->
+    <div id="collaborateur-title">COLLABORATEUR</div>
 
-        <div id="amelioration-entreprise" class="section">
-            <label class="bold">Que pouvons-nous améliorer ?</label>
-            <textarea name="amelioration_entreprise" oninput="autoResizeTextarea(this)"></textarea>
-        </div>
-
-        <div id="decisions" class="section decisions-section">
-            <label class="bold">Décisions prises en commun :</label><br>
-            <div class="decision-item">
-                <label>Décision 1 :</label>
-                <textarea name="decision_1" oninput="autoResizeTextarea(this)"></textarea>
-                <div class="inline-decision">
-                    <label>Délai pour la réaliser :</label>
-                    <input type="date" name="delai_realisation_1">
-                </div>
-            </div>
-            <div id="decision-controls" class="no-print">
-                <button onclick="addDecision()">Ajouter une décision</button>
-                <button onclick="removeDecision()">Supprimer une décision</button>
-            </div>
-        </div>
-
-        <footer id="footer-entretien">
-            <div class="footer-inline">
-                <label class="bold">Entretien :</label>
-                <div class="footer-row">
-                    <label>Effectué le :</label>
-                    <input type="date" name="date_entretien">
-                    <label>Par :</label>
-                    <input type="text" name="responsable">
-                    <label>Collaborateur :</label>
-                    <input type="text" name="collaborateur">
-                </div>
-            </div>
-        </footer>
+    <!-- Informations collaborateur -->
+    <div id="informations-personnelles" class="inline">
+      <label>Nom : <input type="text" name="nom"></label>
+      <label>Prénom : <input type="text" name="prenom"></label>
     </div>
-    <button id="print-button" class="no-print" onclick="imprimerPage()">Imprimer</button>
+    <div id="dates-personnelles" class="inline">
+      <label>Date de naissance : <input type="date" name="date_naissance"></label>
+      <label>Entrée en fonction le : <input type="date" name="entree_fonction"></label>
+    </div>
+
+    <!-- Tableau d'évaluation -->
+    <table id="criteres-evaluation">
+      <tr id="tableau-title">
+        <td colspan="7">TABLEAU D'ÉVALUATION</td>
+      </tr>
+      <tr>
+        <th>Critères</th>
+        <th>--</th>
+        <th>-</th>
+        <th>N</th>
+        <th>+</th>
+        <th>++</th>
+        <th>Remarques</th>
+      </tr>
+      <script>
+        let criteres = [
+          "Performance au travail",
+          "Compétences dans les tâches",
+          "Satisfaction au poste de travail",
+          "Satisfaction dans l’entreprise",
+          "Soin du matériel et des véhicules",
+          "Comportement envers ses collègues",
+          "Comportement envers son supérieur",
+          "Comportement envers les clients",
+          "Assiduité - Respect horaires - Feuilles d’heures",
+          "Tenue vestimentaire & hygiène personnelle",
+          "Prise de responsabilités"
+        ];
+        criteres.forEach((critere, index) => {
+          document.write(`<tr>
+              <td>${critere}</td>
+              <td class="radio-cell"><input type="radio" name="critere${index}" value="--"></td>
+              <td class="radio-cell"><input type="radio" name="critere${index}" value="-"></td>
+              <td class="radio-cell"><input type="radio" name="critere${index}" value="N"></td>
+              <td class="radio-cell"><input type="radio" name="critere${index}" value="+"></td>
+              <td class="radio-cell"><input type="radio" name="critere${index}" value="++"></td>
+              <td><textarea oninput="autoResizeTextarea(this)"></textarea></td>
+          </tr>`);
+        });
+      </script>
+    </table>
+
+    <div id="ameliorations" class="section">
+      <label class="bold">Que peux-tu améliorer ?</label><br>
+      <label>Personnellement : <textarea name="amelioration_personnelle" oninput="autoResizeTextarea(this)"></textarea></label>
+      <label>Dans le travail : <textarea name="amelioration_travail" oninput="autoResizeTextarea(this)"></textarea></label>
+    </div>
+
+    <div id="amelioration-entreprise" class="section">
+      <label class="bold">Que pouvons-nous améliorer ?</label>
+      <textarea name="amelioration_entreprise" oninput="autoResizeTextarea(this)"></textarea>
+    </div>
+
+    <div id="decisions" class="section decisions-section">
+      <label class="bold">Décisions prises en commun :</label><br>
+      <div class="decision-item">
+        <label>Décision 1 :</label>
+        <textarea name="decision_1" oninput="autoResizeTextarea(this)"></textarea>
+        <div class="inline-decision">
+          <label>Délai pour la réaliser :</label>
+          <input type="date" name="delai_realisation_1">
+        </div>
+      </div>
+      <div id="decision-controls" class="no-print">
+        <button onclick="addDecision()">Ajouter une décision</button>
+        <button onclick="removeDecision()">Supprimer une décision</button>
+      </div>
+    </div>
+
+    <footer id="footer-entretien">
+      <div class="footer-inline">
+        <label class="bold">Entretien :</label>
+        <div class="footer-row">
+          <label>Effectué le :</label>
+          <input type="date" name="date_entretien">
+          <label>Par :</label>
+          <input type="text" name="responsable">
+          <label>Collaborateur :</label>
+          <input type="text" name="collaborateur">
+        </div>
+      </div>
+    </footer>
+  </div>
+  <button id="print-button" class="no-print" onclick="imprimerPage()">Imprimer</button>
 </body>
 </html>
