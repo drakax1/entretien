@@ -63,9 +63,6 @@
             display: block;
             margin-top: 10px;
         }
-        footer { 
-            margin-top: 20px;
-        }
         .sub-section { 
             margin-top: 15px;
             margin-left: 20px;
@@ -81,16 +78,25 @@
         .radio-cell { 
             text-align: center;
         }
-        footer .bold { 
-            font-weight: bold;
+        .footer-inline {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
         }
-        .footer-inline { 
+        .footer-row {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
             align-items: center;
         }
-        .footer-inline label { 
+        .footer-row label {
+            flex: 1;
             white-space: nowrap;
+        }
+        .footer-row input[type="date"],
+        .footer-row input[type="text"] {
+            flex: 2;
         }
         input[type="date"] {
             width: 100px;
@@ -98,25 +104,19 @@
         .radio-cell input[type="radio"] {
             margin: 0;
         }
-        /* Boutons fixes pour la gestion des décisions */
-        #decision-buttons {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-        #decision-buttons button {
-            margin-right: 0;
-        }
-        /* Bouton d'impression déjà en position fixe */
+        /* Bouton d'impression flottant */
         #print-button {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 1000;
+            max-width: calc(100vw - 850px);
+        }
+        /* Masquer les éléments avec la classe no-print à l'impression */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
         }
     </style>
     <script>
@@ -161,7 +161,7 @@
                     <input type="date" name="delai_realisation_${decisionNumber}">
                 </div>
             `;
-            container.appendChild(decisionDiv);
+            container.insertBefore(decisionDiv, document.getElementById('decision-controls'));
             updateDecisionNumbers();
         }
 
@@ -257,25 +257,26 @@
                     <input type="date" name="delai_realisation_1">
                 </div>
             </div>
-        </div>
-
-        <div id="decision-buttons">
-            <button onclick="addDecision()">Ajouter une décision</button>
-            <button onclick="removeDecision()">Supprimer une décision</button>
+            <div id="decision-controls" class="no-print">
+                <button onclick="addDecision()">Ajouter une décision</button>
+                <button onclick="removeDecision()">Supprimer une décision</button>
+            </div>
         </div>
 
         <footer id="footer-entretien">
             <div class="footer-inline">
-                <label class="bold">Entretien effectué le :</label>
-                <input type="date" name="date_entretien">
-                <label>Par :</label>
-                <input type="text" name="responsable">
-                <label>Collaborateur :</label>
-                <input type="text" name="collaborateur">
+                <label class="bold">Entretien :</label>
+                <div class="footer-row">
+                    <label>Effectué le :</label>
+                    <input type="date" name="date_entretien">
+                    <label>Par :</label>
+                    <input type="text" name="responsable">
+                    <label>Collaborateur :</label>
+                    <input type="text" name="collaborateur">
+                </div>
             </div>
         </footer>
-        
-        <button id="print-button" onclick="imprimerPage()">Imprimer</button>
     </div>
+    <button id="print-button" class="no-print" onclick="imprimerPage()">Imprimer</button>
 </body>
 </html>
