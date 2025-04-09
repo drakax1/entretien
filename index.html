@@ -78,29 +78,6 @@
     .radio-cell { 
       text-align: center;
     }
-    .footer-inline {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
-    }
-    .footer-row {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .footer-row label {
-      flex: 1;
-      white-space: nowrap;
-    }
-    .footer-row input[type="date"],
-    .footer-row input[type="text"] {
-      flex: 2;
-    }
-    input[type="date"] {
-      width: 100px;
-    }
     .radio-cell input[type="radio"] {
       margin: 0;
     }
@@ -120,7 +97,7 @@
     }
     /* Titre "ENTRETIEN ANNUEL" */
     #entretien-annuel-title {
-      background-color: #666; /* Gris foncé */
+      background-color: #666;
       color: white;
       text-align: center;
       text-transform: uppercase;
@@ -130,7 +107,7 @@
     }
     /* Titre "COLLABORATEUR" */
     #collaborateur-title {
-      background-color: #999; /* Gris clair */
+      background-color: #999;
       color: white;
       text-align: center;
       text-transform: uppercase;
@@ -138,15 +115,34 @@
       font-weight: bold;
       margin-bottom: 15px;
     }
-    /* Titre du tableau "TABLEAU D'ÉVALUATION" : on supprime le style précédent et on applique le même que pour COLLABORATEUR */
     #tableau-title td {
-      background-color: #999; /* Même gris que "COLLABORATEUR" */
+      background-color: #999;
       color: white;
       text-align: center;
       text-transform: uppercase;
       padding: 10px;
       font-weight: bold;
       vertical-align: middle;
+    }
+    /* Nouvelle section ENTRETEN */
+    #entretien-title {
+      background-color: #999;
+      color: white;
+      text-align: center;
+      text-transform: uppercase;
+      padding: 10px;
+      font-weight: bold;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+    .inline-entretien {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    .inline-entretien label {
+      flex: 1;
     }
   </style>
   <script>
@@ -212,13 +208,9 @@
 </head>
 <body>
   <div class="container">
-    <!-- Titre "ENTRETIEN ANNUEL" -->
     <div id="entretien-annuel-title">ENTRETIEN ANNUEL</div>
-
-    <!-- Titre "COLLABORATEUR" -->
     <div id="collaborateur-title">COLLABORATEUR</div>
 
-    <!-- Informations collaborateur -->
     <div id="informations-personnelles" class="inline">
       <label>Nom : <input type="text" name="nom"></label>
       <label>Prénom : <input type="text" name="prenom"></label>
@@ -228,7 +220,6 @@
       <label>Entrée en fonction le : <input type="date" name="entree_fonction"></label>
     </div>
 
-    <!-- Tableau d'évaluation -->
     <table id="criteres-evaluation">
       <tr id="tableau-title">
         <td colspan="7">TABLEAU D'ÉVALUATION</td>
@@ -297,19 +288,14 @@
       </div>
     </div>
 
-    <footer id="footer-entretien">
-      <div class="footer-inline">
-        <label class="bold">Entretien :</label>
-        <div class="footer-row">
-          <label>Effectué le :</label>
-          <input type="date" name="date_entretien">
-          <label>Par :</label>
-          <input type="text" name="responsable">
-          <label>Collaborateur :</label>
-          <input type="text" name="collaborateur">
-        </div>
-      </div>
-    </footer>
+    <!-- Nouvelle section ENTRETEN -->
+    <div id="entretien-title">ENTRETIEN</div>
+    <div class="inline-entretien">
+      <label>Effectué le : <input type="date" name="date_entretien"></label>
+      <label>Par : <input type="text" name="responsable"></label>
+      <label>Collaborateur : <input type="text" name="collaborateur"></label>
+    </div>
+
   </div>
   <button id="print-button" class="no-print" onclick="imprimerPage()">Imprimer</button>
 </body>
