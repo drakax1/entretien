@@ -1,101 +1,78 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Évaluation et Entretien Annuel</title>
   <style>
-    body { 
+    body {
       font-family: Arial, sans-serif;
       margin: 20px;
     }
-    .container { 
+    .container {
       max-width: 800px;
       margin: auto;
     }
-    table { 
+    table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
-    th, td { 
+    th, td {
       border: 1px solid #ccc;
       padding: 10px;
       text-align: center;
     }
-    th { 
+    th {
       background-color: #f4f4f4;
     }
-    td:first-child { 
+    td:first-child {
       text-align: left;
     }
-    input, textarea { 
+    input, textarea {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
       box-sizing: border-box;
     }
-    textarea { 
+    textarea {
       resize: none;
       overflow: hidden;
       min-height: 50px;
     }
-    button { 
+    button {
       background-color: #28a745;
       color: white;
       padding: 10px;
       border: none;
       cursor: pointer;
     }
-    button:hover { 
+    button:hover {
       background-color: #218838;
     }
-    .inline { 
+    .inline {
       display: flex;
       gap: 40px;
       margin-bottom: 15px;
     }
-    .inline label { 
+    .inline label {
       flex: 1;
     }
-    .bold { 
+    .bold {
       font-weight: bold;
       display: block;
       margin-top: 10px;
     }
-    .sub-section { 
-      margin-top: 15px;
-      margin-left: 20px;
-    }
-    .decisions-section { 
-      margin-top: 15px;
-    }
-    .decision-item { 
-      margin-bottom: 15px;
-      border: 1px solid #ddd;
-      padding: 10px;
-    }
-    .radio-cell { 
+    .titre-section {
+      background-color: #999;
+      color: white;
       text-align: center;
+      text-transform: uppercase;
+      padding: 10px;
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 15px;
     }
-    .radio-cell input[type="radio"] {
-      margin: 0;
-    }
-    /* Bouton d'impression flottant */
-    #print-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-      max-width: calc(100vw - 850px);
-    }
-    /* Masquer les éléments avec la classe no-print à l'impression */
-    @media print {
-      .no-print {
-        display: none !important;
-      }
-    }
-    /* Titre "ENTRETIEN ANNUEL" */
     #entretien-annuel-title {
       background-color: #666;
       color: white;
@@ -105,17 +82,6 @@
       font-weight: bold;
       margin-bottom: 20px;
     }
-    /* Classe commune pour les titres des sections */
-    .titre-section {
-      background-color: #999;
-      color: white;
-      text-align: center;
-      text-transform: uppercase;
-      padding: 10px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-    /* Titre du tableau "TABLEAU D'ÉVALUATION" */
     #tableau-title td {
       background-color: #999;
       color: white;
@@ -124,10 +90,6 @@
       padding: 10px;
       font-weight: bold;
       vertical-align: middle;
-    }
-    /* Espace supplémentaire pour le titre "ENTRETIEN" */
-    #entretien-title {
-      margin-top: 30px;
     }
     .inline-entretien {
       display: flex;
@@ -138,6 +100,32 @@
     .inline-entretien label {
       flex: 1;
     }
+    .radio-cell {
+      text-align: center;
+    }
+    .radio-cell input[type="radio"] {
+      margin: 0;
+    }
+    .decision-item {
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+    #decision-controls {
+      margin-bottom: 15px;
+    }
+    #print-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      max-width: calc(100vw - 850px);
+    }
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+    }
   </style>
   <script>
     function imprimerPage() {
@@ -145,56 +133,47 @@
     }
     function autoResizeTextarea(el) {
       el.style.height = 'auto';
-      el.style.height = (el.scrollHeight) + 'px';
+      el.style.height = el.scrollHeight + 'px';
     }
     function updateDecisionNumbers() {
       const decisions = document.querySelectorAll('#decisions .decision-item');
       decisions.forEach((item, index) => {
         const label = item.querySelector('label');
-        if(label) {
-          label.textContent = "Décision " + (index + 1) + " :";
-        }
+        if (label) label.textContent = "Décision " + (index + 1) + " :";
         const textarea = item.querySelector('textarea');
-        if(textarea) {
-          textarea.setAttribute("name", "decision_" + (index + 1));
-        }
+        if (textarea) textarea.setAttribute("name", "decision_" + (index + 1));
         const inputDate = item.querySelector('input[type="date"]');
-        if(inputDate) {
-          inputDate.setAttribute("name", "delai_realisation_" + (index + 1));
-        }
+        if (inputDate) inputDate.setAttribute("name", "delai_realisation_" + (index + 1));
       });
     }
     function addDecision() {
       const container = document.getElementById('decisions');
       const currentCount = container.querySelectorAll('.decision-item').length;
-      const decisionNumber = currentCount + 1;
       const decisionDiv = document.createElement('div');
       decisionDiv.className = 'decision-item';
       decisionDiv.innerHTML = `
-          <label>Décision ${decisionNumber} :</label>
-          <textarea name="decision_${decisionNumber}" oninput="autoResizeTextarea(this)"></textarea>
-          <div class="inline-decision">
-              <label>Délai pour la réaliser :</label>
-              <input type="date" name="delai_realisation_${decisionNumber}">
-          </div>
-      `;
+        <label>Décision ${currentCount + 1} :</label>
+        <textarea name="decision_${currentCount + 1}" oninput="autoResizeTextarea(this)"></textarea>
+        <div class="inline-decision">
+          <label>Délai pour la réaliser :</label>
+          <input type="date" name="delai_realisation_${currentCount + 1}">
+        </div>`;
       container.insertBefore(decisionDiv, document.getElementById('decision-controls'));
       updateDecisionNumbers();
     }
     function removeDecision() {
       const container = document.getElementById('decisions');
       const decisions = container.querySelectorAll('.decision-item');
-      if(decisions.length > 1) {
+      if (decisions.length > 1) {
         container.removeChild(decisions[decisions.length - 1]);
         updateDecisionNumbers();
       } else {
         alert("La première décision ne peut pas être supprimée.");
       }
     }
-    document.addEventListener("DOMContentLoaded", function() {
-      // Initialisation du redimensionnement auto pour toutes les textarea
+    document.addEventListener("DOMContentLoaded", function () {
       document.querySelectorAll("textarea").forEach(textarea => {
-        textarea.addEventListener("input", function() {
+        textarea.addEventListener("input", function () {
           autoResizeTextarea(this);
         });
       });
@@ -204,13 +183,13 @@
 <body>
   <div class="container">
     <div id="entretien-annuel-title">ENTRETIEN ANNUEL</div>
-    <div id="collaborateur-title" class="titre-section">COLLABORATEUR</div>
+    <div class="titre-section">COLLABORATEUR</div>
 
-    <div id="informations-personnelles" class="inline">
+    <div class="inline">
       <label>Nom : <input type="text" name="nom"></label>
       <label>Prénom : <input type="text" name="prenom"></label>
     </div>
-    <div id="dates-personnelles" class="inline">
+    <div class="inline">
       <label>Date de naissance : <input type="date" name="date_naissance"></label>
       <label>Entrée en fonction le : <input type="date" name="entree_fonction"></label>
     </div>
@@ -244,31 +223,29 @@
         ];
         criteres.forEach((critere, index) => {
           document.write(`<tr>
-              <td>${critere}</td>
-              <td class="radio-cell"><input type="radio" name="critere${index}" value="--"></td>
-              <td class="radio-cell"><input type="radio" name="critere${index}" value="-"></td>
-              <td class="radio-cell"><input type="radio" name="critere${index}" value="N"></td>
-              <td class="radio-cell"><input type="radio" name="critere${index}" value="+"></td>
-              <td class="radio-cell"><input type="radio" name="critere${index}" value="++"></td>
-              <td><textarea oninput="autoResizeTextarea(this)"></textarea></td>
+            <td>${critere}</td>
+            <td class="radio-cell"><input type="radio" name="critere${index}" value="--"></td>
+            <td class="radio-cell"><input type="radio" name="critere${index}" value="-"></td>
+            <td class="radio-cell"><input type="radio" name="critere${index}" value="N"></td>
+            <td class="radio-cell"><input type="radio" name="critere${index}" value="+"></td>
+            <td class="radio-cell"><input type="radio" name="critere${index}" value="++"></td>
+            <td><textarea oninput="autoResizeTextarea(this)"></textarea></td>
           </tr>`);
         });
       </script>
     </table>
 
-    <div id="ameliorations" class="section">
-      <label class="bold">Que peux-tu améliorer ?</label><br>
-      <label>Personnellement : <textarea name="amelioration_personnelle" oninput="autoResizeTextarea(this)"></textarea></label>
-      <label>Dans le travail : <textarea name="amelioration_travail" oninput="autoResizeTextarea(this)"></textarea></label>
-    </div>
+    <div class="titre-section">AMÉLIORATIONS</div>
+    <label class="bold">Que peux-tu améliorer ?</label><br>
+    <label>Personnellement : <textarea name="amelioration_personnelle" oninput="autoResizeTextarea(this)"></textarea></label>
+    <label>Dans le travail : <textarea name="amelioration_travail" oninput="autoResizeTextarea(this)"></textarea></label>
 
-    <div id="amelioration-entreprise" class="section">
-      <label class="bold">Que pouvons-nous améliorer ?</label>
-      <textarea name="amelioration_entreprise" oninput="autoResizeTextarea(this)"></textarea>
-    </div>
+    <div class="titre-section">ENTREPRISE</div>
+    <label class="bold">Que pouvons-nous améliorer ?</label>
+    <textarea name="amelioration_entreprise" oninput="autoResizeTextarea(this)"></textarea>
 
-    <div id="decisions" class="section decisions-section">
-      <label class="bold">Décisions prises en commun :</label><br>
+    <div class="titre-section">DÉCISIONS</div>
+    <div id="decisions">
       <div class="decision-item">
         <label>Décision 1 :</label>
         <textarea name="decision_1" oninput="autoResizeTextarea(this)"></textarea>
@@ -283,15 +260,14 @@
       </div>
     </div>
 
-    <!-- Nouvelle section ENTRETIEN -->
-    <div id="entretien-title" class="titre-section">ENTRETIEN</div>
+    <div class="titre-section">ENTRETIEN</div>
     <div class="inline-entretien">
       <label>Effectué le : <input type="date" name="date_entretien"></label>
       <label>Par : <input type="text" name="responsable"></label>
       <label>Collaborateur : <input type="text" name="collaborateur"></label>
     </div>
-
   </div>
+
   <button id="print-button" class="no-print" onclick="imprimerPage()">Imprimer</button>
 </body>
 </html>
