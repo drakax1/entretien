@@ -3,43 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Évaluation et Entretien Annuel</title>
+  <title>ENTRETIEN ANNUEL</title>
+
   <style>
+    /* On donne une jolie police à tout le texte */
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+      margin: 20px; /* On met de l’espace autour du contenu */
     }
+
+    /* Le contenu est centré et ne dépasse pas 800px de large */
     .container {
       max-width: 800px;
       margin: auto;
     }
+
+    /* Tableaux bien espacés avec bords visibles */
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
+
     th, td {
       border: 1px solid #ccc;
       padding: 10px;
       text-align: center;
     }
+
+    /* Titres de colonnes en gris clair */
     th {
       background-color: #f4f4f4;
     }
+
+    /* Le premier élément de chaque ligne est aligné à gauche */
     td:first-child {
       text-align: left;
     }
+
+    /* Les zones de texte et champs à remplir prennent toute la largeur disponible */
     input, textarea {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
-      box-sizing: border-box;
+      box-sizing: border-box; /* Pour que le padding ne dépasse pas */
     }
+
+    /* Les zones de texte peuvent grandir automatiquement mais pas être redimensionnées à la main */
     textarea {
       resize: none;
       overflow: hidden;
       min-height: 50px;
     }
+
+    /* Style des boutons verts */
     button {
       background-color: #28a745;
       color: white;
@@ -47,22 +64,32 @@
       border: none;
       cursor: pointer;
     }
+
+    /* Quand la souris passe dessus, le bouton devient plus foncé */
     button:hover {
       background-color: #218838;
     }
+
+    /* Organisation des champs sur la même ligne avec de l’espace entre eux */
     .inline {
       display: flex;
       gap: 40px;
       margin-bottom: 15px;
     }
+
+    /* Chaque champ prend la même place */
     .inline label {
       flex: 1;
     }
+
+    /* Texte en gras utilisé pour les petits titres dans les sections */
     .bold {
       font-weight: bold;
       display: block;
-      margin-top: 10px;
+      margin-top: 15px;
     }
+
+    /* Titres de section comme "ENTREPRISE", "DÉCISIONS", etc. */
     .titre-section {
       background-color: #999;
       color: white;
@@ -73,6 +100,8 @@
       margin-top: 15px;
       margin-bottom: 15px;
     }
+
+    /* Titre principal "ENTRETIEN ANNUEL" */
     #entretien-annuel-title {
       background-color: #666;
       color: white;
@@ -80,8 +109,10 @@
       text-transform: uppercase;
       padding: 10px;
       font-weight: bold;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
+
+    /* Style pour la ligne de titre du tableau d’évaluation */
     #tableau-title td {
       background-color: #999;
       color: white;
@@ -91,29 +122,41 @@
       font-weight: bold;
       vertical-align: middle;
     }
+
+    /* Autre type d'organisation en ligne pour la partie entretien */
     .inline-entretien {
       display: flex;
       gap: 40px;
       margin-bottom: 15px;
       flex-wrap: wrap;
     }
+
     .inline-entretien label {
       flex: 1;
     }
+
+    /* Alignement des boutons radio au centre des cases */
     .radio-cell {
       text-align: center;
     }
+
     .radio-cell input[type="radio"] {
       margin: 0;
     }
+
+    /* Boîte pour chaque décision */
     .decision-item {
       margin-bottom: 15px;
       border: 1px solid #ddd;
       padding: 10px;
     }
+
+    /* Espace sous les boutons Ajouter/Supprimer */
     #decision-controls {
       margin-bottom: 15px;
     }
+
+    /* Bouton pour imprimer la page, toujours visible en bas à droite */
     #print-button {
       position: fixed;
       bottom: 20px;
@@ -121,20 +164,28 @@
       z-index: 1000;
       max-width: calc(100vw - 850px);
     }
+
+    /* Quand on imprime, on cache les éléments marqués "no-print" */
     @media print {
       .no-print {
         display: none !important;
       }
     }
   </style>
+
   <script>
+    // Quand on clique sur "Imprimer", ça lance l'impression
     function imprimerPage() {
       window.print();
     }
+
+    // Cette fonction fait que les textarea grandissent quand on écrit dedans
     function autoResizeTextarea(el) {
       el.style.height = 'auto';
       el.style.height = el.scrollHeight + 'px';
     }
+
+    // Mets à jour les numéros des décisions (1, 2, 3...) quand on ajoute ou enlève
     function updateDecisionNumbers() {
       const decisions = document.querySelectorAll('#decisions .decision-item');
       decisions.forEach((item, index) => {
@@ -146,6 +197,8 @@
         if (inputDate) inputDate.setAttribute("name", "delai_realisation_" + (index + 1));
       });
     }
+
+    // Ajoute une nouvelle décision en bas
     function addDecision() {
       const container = document.getElementById('decisions');
       const currentCount = container.querySelectorAll('.decision-item').length;
@@ -161,6 +214,8 @@
       container.insertBefore(decisionDiv, document.getElementById('decision-controls'));
       updateDecisionNumbers();
     }
+
+    // Supprime la dernière décision, sauf s’il n’en reste qu’une
     function removeDecision() {
       const container = document.getElementById('decisions');
       const decisions = container.querySelectorAll('.decision-item');
@@ -171,6 +226,8 @@
         alert("La première décision ne peut pas être supprimée.");
       }
     }
+
+    // Quand la page est prête, on active l’auto-agrandissement des textarea
     document.addEventListener("DOMContentLoaded", function () {
       document.querySelectorAll("textarea").forEach(textarea => {
         textarea.addEventListener("input", function () {
@@ -180,11 +237,14 @@
     });
   </script>
 </head>
+
 <body>
   <div class="container">
+    <!-- Titre principal -->
     <div id="entretien-annuel-title">ENTRETIEN ANNUEL</div>
-    <div class="titre-section">COLLABORATEUR</div>
 
+    <!-- Section Collaborateur -->
+    <div class="titre-section">COLLABORATEUR</div>
     <div class="inline">
       <label>Nom : <input type="text" name="nom"></label>
       <label>Prénom : <input type="text" name="prenom"></label>
@@ -194,6 +254,7 @@
       <label>Entrée en fonction le : <input type="date" name="entree_fonction"></label>
     </div>
 
+    <!-- Tableau d’évaluation des critères -->
     <table id="criteres-evaluation">
       <tr id="tableau-title">
         <td colspan="7">TABLEAU D'ÉVALUATION</td>
@@ -205,9 +266,10 @@
         <th>N</th>
         <th>+</th>
         <th>++</th>
-        <th>Remarques</th>
+        <th>Remarque-s</th>
       </tr>
       <script>
+        // Liste des critères d’évaluation
         let criteres = [
           "Performance au travail",
           "Compétences dans les tâches",
@@ -221,6 +283,8 @@
           "Tenue vestimentaire & hygiène personnelle",
           "Prise de responsabilités"
         ];
+
+        // Pour chaque critère, on crée une ligne dans le tableau
         criteres.forEach((critere, index) => {
           document.write(`<tr>
             <td>${critere}</td>
@@ -235,15 +299,16 @@
       </script>
     </table>
 
-    <div class="titre-section">AMÉLIORATIONS</div>
-    <label class="bold">Que peux-tu améliorer ?</label><br>
+    <!-- Section QUE PEUX-TU AMÉLIORER? -->
+    <div class="titre-section">QUE PEUX-TU AMÉLIORER?</div>
     <label>Personnellement : <textarea name="amelioration_personnelle" oninput="autoResizeTextarea(this)"></textarea></label>
     <label>Dans le travail : <textarea name="amelioration_travail" oninput="autoResizeTextarea(this)"></textarea></label>
 
-    <div class="titre-section">ENTREPRISE</div>
-    <label class="bold">Que pouvons-nous améliorer ?</label>
+    <!-- Section QUE POUVONS-NOUS AMÉLIORER? -->
+    <div class="titre-section">QUE POUVONS-NOUS AMÉLIORER?</div>
     <textarea name="amelioration_entreprise" oninput="autoResizeTextarea(this)"></textarea>
 
+    <!-- Section Décisions avec ajout/suppression -->
     <div class="titre-section">DÉCISIONS</div>
     <div id="decisions">
       <div class="decision-item">
@@ -260,6 +325,7 @@
       </div>
     </div>
 
+    <!-- Section Entretien final -->
     <div class="titre-section">ENTRETIEN</div>
     <div class="inline-entretien">
       <label>Effectué le : <input type="date" name="date_entretien"></label>
@@ -268,6 +334,7 @@
     </div>
   </div>
 
+  <!-- Bouton pour imprimer, en bas à droite -->
   <button id="print-button" class="no-print" onclick="imprimerPage()">Imprimer</button>
 </body>
 </html>
