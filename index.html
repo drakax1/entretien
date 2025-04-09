@@ -82,13 +82,6 @@
       flex: 1;
     }
 
-    /* Texte en gras utilisé pour les petits titres dans les sections */
-    .bold {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
-    }
-
     /* Titres de section comme "ENTREPRISE", "DÉCISIONS", etc. */
     .titre-section {
       background-color: #999;
@@ -170,6 +163,11 @@
       .no-print {
         display: none !important;
       }
+    }
+
+    /* Nouvelle classe pour les sous-sections */
+    .sous-section {
+      margin-bottom: 15px;
     }
   </style>
 
@@ -301,12 +299,18 @@
 
     <!-- Section QUE PEUX-TU AMÉLIORER? -->
     <div class="titre-section">QUE PEUX-TU AMÉLIORER?</div>
-    <label>Personnellement : <textarea name="amelioration_personnelle" oninput="autoResizeTextarea(this)"></textarea></label>
-    <label>Dans le travail : <textarea name="amelioration_travail" oninput="autoResizeTextarea(this)"></textarea></label>
+    <div class="sous-section">
+      <label>Personnellement : <textarea name="amelioration_personnelle" oninput="autoResizeTextarea(this)"></textarea></label>
+    </div>
+    <div class="sous-section">
+      <label>Dans le travail : <textarea name="amelioration_travail" oninput="autoResizeTextarea(this)"></textarea></label>
+    </div>
 
     <!-- Section QUE POUVONS-NOUS AMÉLIORER? -->
     <div class="titre-section">QUE POUVONS-NOUS AMÉLIORER?</div>
-    <textarea name="amelioration_entreprise" oninput="autoResizeTextarea(this)"></textarea>
+    <div class="sous-section">
+      <textarea name="amelioration_entreprise" oninput="autoResizeTextarea(this)"></textarea>
+    </div>
 
     <!-- Section Décisions avec ajout/suppression -->
     <div class="titre-section">DÉCISIONS</div>
