@@ -105,8 +105,8 @@
       font-weight: bold;
       margin-bottom: 20px;
     }
-    /* Titre "COLLABORATEUR" */
-    #collaborateur-title {
+    /* Classe commune pour les titres des sections */
+    .titre-section {
       background-color: #999;
       color: white;
       text-align: center;
@@ -115,6 +115,7 @@
       font-weight: bold;
       margin-bottom: 15px;
     }
+    /* Titre du tableau "TABLEAU D'ÉVALUATION" */
     #tableau-title td {
       background-color: #999;
       color: white;
@@ -124,16 +125,9 @@
       font-weight: bold;
       vertical-align: middle;
     }
-    /* Nouvelle section ENTRETEN */
+    /* Espace supplémentaire pour le titre "ENTRETIEN" */
     #entretien-title {
-      background-color: #999;
-      color: white;
-      text-align: center;
-      text-transform: uppercase;
-      padding: 10px;
-      font-weight: bold;
       margin-top: 30px;
-      margin-bottom: 15px;
     }
     .inline-entretien {
       display: flex;
@@ -198,6 +192,7 @@
       }
     }
     document.addEventListener("DOMContentLoaded", function() {
+      // Initialisation du redimensionnement auto pour toutes les textarea
       document.querySelectorAll("textarea").forEach(textarea => {
         textarea.addEventListener("input", function() {
           autoResizeTextarea(this);
@@ -209,7 +204,7 @@
 <body>
   <div class="container">
     <div id="entretien-annuel-title">ENTRETIEN ANNUEL</div>
-    <div id="collaborateur-title">COLLABORATEUR</div>
+    <div id="collaborateur-title" class="titre-section">COLLABORATEUR</div>
 
     <div id="informations-personnelles" class="inline">
       <label>Nom : <input type="text" name="nom"></label>
@@ -288,8 +283,8 @@
       </div>
     </div>
 
-    <!-- Nouvelle section ENTRETEN -->
-    <div id="entretien-title">ENTRETIEN</div>
+    <!-- Nouvelle section ENTRETIEN -->
+    <div id="entretien-title" class="titre-section">ENTRETIEN</div>
     <div class="inline-entretien">
       <label>Effectué le : <input type="date" name="date_entretien"></label>
       <label>Par : <input type="text" name="responsable"></label>
